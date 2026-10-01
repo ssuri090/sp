@@ -1,76 +1,77 @@
 import React from 'react'
-import { Container, SectionTitle, Card, Icon } from './common'
+import { Container } from './common'
+import { BUSINESS } from '../business'
 
 const WhyChooseUs = () => {
-  const reasons = [
-    {
-      number: '01',
-      title: 'Personal Service',
-      description: 'You get direct support from an experienced consultant, not a one-size-fits-all sales process.',
-      icon: 'consultation',
-    },
-    {
-      number: '02',
-      title: 'Custom Fitting',
-      description: 'Precise measurements and careful planning ensure each shade sits perfectly and performs beautifully.',
-      icon: 'ruler',
-    },
-    {
-      number: '03',
-      title: 'Design Guidance',
-      description: 'We help you select colors, openness levels, and materials that truly match your home.',
-      icon: 'palette',
-    },
-    {
-      number: '04',
-      title: 'Smooth Installation',
-      description: 'Our installers work cleanly, efficiently, and with detail-focused finishing from start to final walkthrough.',
-      icon: 'install',
-    },
-  ]
-
   return (
-    <section id="why-us" className="relative overflow-hidden bg-[#f8fbff] py-20 md:py-28">
-      <div className="absolute -right-28 top-0 -z-10 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
-
+    <section id="faq" className="section section--paper">
       <Container>
-        <SectionTitle
-          title="Why Homeowners Choose S&P Elegant Blinds"
-          subtitle="Premium products matter. The difference is in execution, communication, and the care behind every detail."
-          eyebrow="Why Choose Us"
-        />
-
-        <div className="grid gap-6 md:grid-cols-2">
-          {reasons.map((reason, index) => (
-            <Card key={index} className="group flex gap-4 bg-white p-7">
-              <div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white">
-                  <Icon name={reason.icon} className="h-5 w-5" />
-                </div>
-              </div>
-
-              <div>
-                <p className="text-xs font-semibold tracking-[0.14em] text-slate-400">{reason.number}</p>
-                <h3 className="mt-1 text-2xl font-semibold text-slate-900">{reason.title}</h3>
-                <p className="mt-2 leading-relaxed text-slate-600">{reason.description}</p>
-                <div className="mt-4 h-px w-0 bg-primary transition-all duration-300 group-hover:w-full" />
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        <div className="mt-12 rounded-[2rem] border border-slate-200 bg-white p-8 shadow-soft">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {[
-              { value: '120+', label: 'Installations Completed' },
-              { value: '4.9 / 5', label: 'Average Customer Rating' },
-              { value: '24h', label: 'Typical Quote Response' },
-            ].map((item) => (
-              <div key={item.label} className="rounded-2xl bg-slate-50 p-5 text-center">
-                <p className="font-display text-4xl text-slate-900">{item.value}</p>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">{item.label}</p>
+        <div className="service-area-block">
+          <div>
+            <p className="eyebrow">Service area</p>
+            <h2>Serving select ZIP codes across three states.</h2>
+          </div>
+          <div className="service-area-copy">
+            <p>Based in Middletown, Delaware, we serve the ZIP codes below.</p>
+            <p>If your ZIP code isn't listed, contact us to ask about your location.</p>
+          </div>
+          <div className="service-area-groups">
+            {BUSINESS.serviceAreas.map((area) => (
+              <div className="service-area-group" key={area.abbreviation}>
+                <h3>{area.state}</h3>
+                <p>{area.zipCodes.join(', ')}</p>
               </div>
             ))}
+          </div>
+        </div>
+
+        <div className="local-services">
+          <div className="local-services__heading">
+            <p className="eyebrow">Local service</p>
+            <h2>Window treatments for your area.</h2>
+          </div>
+          <div className="local-service-grid">
+            {BUSINESS.localServiceAreas.map((area) => (
+              <article className="local-service-item" key={`${area.city}-${area.state}`}>
+                <h3>{area.city}, {area.state}</h3>
+                <p>{area.description}</p>
+              </article>
+            ))}
+          </div>
+          <div className="project-type-grid">
+            <article>
+              <h3>Blinds for new construction homes</h3>
+              <p>Planning a new build? Share the window schedule and room plans so product options can be discussed before final measurements are confirmed.</p>
+            </article>
+            <article>
+              <h3>Whole house window treatments</h3>
+              <p>Coordinate a look throughout the home while choosing light control and privacy to suit each room.</p>
+            </article>
+          </div>
+        </div>
+
+        <div className="faq-layout">
+          <div className="faq-intro">
+            <p className="eyebrow">Good to know</p>
+            <h2>Questions, before you choose.</h2>
+          </div>
+          <div className="faq-list">
+            <details>
+              <summary>How do measurements and estimates work?</summary>
+              <p>We'll discuss your windows and preferences, then confirm measurements and product configuration before the quote is finalized.</p>
+            </details>
+            <details>
+              <summary>Can I choose between light filtering and room darkening?</summary>
+              <p>Light control depends on the collection and fabric. Tell us how you use the room and we'll help you compare available options.</p>
+            </details>
+            <details>
+              <summary>Can I add motorization?</summary>
+              <p>Motorized options are available for some products. Controls and compatibility vary, so ask us to confirm for the collection you're considering.</p>
+            </details>
+            <details>
+              <summary>What about patio doors or custom printed shades?</summary>
+              <p>Patio applications and custom photo printing depend on product compatibility. Share a photo or describe the opening and we'll discuss possible options.</p>
+            </details>
           </div>
         </div>
       </Container>

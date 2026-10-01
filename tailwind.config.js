@@ -7,10 +7,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#4DB6E5',
-        'primary-light': '#E8F4F9',
-        'primary-dark': '#2A9CC9',
-        page: '#f7f9fc',
+        primary: '#8B6747',
+        'primary-light': '#EEE5DA',
+        'primary-dark': '#704F34',
+        page: '#F6F3EC',
+        paper: '#FBF9F4',
+        stone: '#EEEAE1',
+        ink: '#2D2A26',
+        muted: '#68635B',
+        line: '#DDD6CB',
+        whatsapp: '#176B4B',
         'neutral-50': '#F9FAFB',
         'neutral-100': '#F3F4F6',
         'neutral-200': '#E5E7EB',

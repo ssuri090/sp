@@ -12,22 +12,7 @@ export const Button = ({
   href,
   ...props
 }) => {
-  const baseStyles =
-    'inline-flex items-center justify-center gap-2 rounded-2xl font-semibold tracking-wide transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40'
-
-  const variants = {
-    primary: 'bg-primary text-white shadow-soft hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-premium',
-    secondary: 'bg-white text-slate-800 shadow-soft ring-1 ring-slate-200 hover:-translate-y-0.5 hover:shadow-medium',
-    outline: 'bg-transparent text-slate-800 ring-1 ring-slate-300 hover:bg-slate-50',
-  }
-
-  const sizes = {
-    sm: 'px-4 py-2 text-sm',
-    md: 'px-6 py-3 text-sm sm:text-base',
-    lg: 'px-7 py-3.5 text-base sm:text-lg',
-  }
-
-  const classes = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`
+  const classes = `button button--${variant} button--${size} ${className}`
 
   if (href) {
     return (

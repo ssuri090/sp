@@ -1,51 +1,55 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Container, Button } from './common'
+import { BUSINESS } from '../business'
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const menuButtonRef = useRef(null)
 
   const navItems = [
-    { label: 'Services', href: '#services' },
-    { label: 'Gallery', href: '#gallery' },
-    { label: 'Why Us', href: '#why-us' },
-    { label: 'Testimonials', href: '#testimonials' },
+    { label: 'Collections', href: '#collections' },
+    { label: 'Motorization', href: '#motorization' },
+    { label: 'Our Work', href: '#work' },
     { label: 'Contact', href: '#contact' },
   ]
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-slate-200/70 bg-white/80 backdrop-blur-xl">
-      <Container className="py-3">
+    <header className="site-header">
+      <Container className="site-header__inner">
         <div className="flex items-center justify-between">
-          <a href="#top" className="group flex flex-col leading-none">
-            <span className="font-display text-2xl tracking-tight text-slate-900">S&amp;P Elegant Blinds</span>
-            <span className="mt-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">Premium Custom Window Shades</span>
+          <a href="#top" className="brand-mark">
+            <span className="brand-mark__name">S&amp;P <span>Elegant Blinds</span></span>
+            <span className="brand-mark__descriptor">Custom window treatments</span>
           </a>
 
-          <nav className="hidden items-center gap-7 md:flex">
+          <nav className="site-nav hidden md:flex" aria-label="Main navigation">
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
-                className="text-sm font-semibold text-slate-600 transition-colors duration-300 hover:text-slate-900"
+                className="site-nav__link"
               >
                 {item.label}
               </a>
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3 md:flex">
-            <a href="tel:+13025550123" className="text-sm font-semibold text-slate-700 transition-colors hover:text-slate-900">
-              (302) 555-0123
+          <div className="hidden items-center gap-4 md:flex">
+            <a href={BUSINESS.phoneHref} className="header-phone">
+              {BUSINESS.phoneDisplay}
             </a>
             <Button variant="primary" size="sm" href="#contact">
-              Get Free Quote
+              Request a Quote
             </Button>
           </div>
 
           <button
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 md:hidden"
+            className="menu-toggle md:hidden"
+            ref={menuButtonRef}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             <div className="flex flex-col gap-1.5">
               <div className={`h-0.5 w-5 bg-slate-800 transition-all ${mobileMenuOpen ? 'translate-y-2 rotate-45' : ''}`} />
@@ -56,19 +60,29 @@ const Header = () => {
         </div>
 
         {mobileMenuOpen && (
-          <nav className="mt-4 space-y-2 rounded-2xl border border-slate-200 bg-white p-4 shadow-soft md:hidden">
+          <nav
+            id="mobile-navigation"
+            className="mobile-nav md:hidden"
+            aria-label="Mobile navigation"
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') {
+                setMobileMenuOpen(false)
+                menuButtonRef.current?.focus()
+              }
+            }}
+          >
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
-                className="block rounded-xl px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100"
+                className="mobile-nav__link"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.label}
               </a>
             ))}
             <Button variant="primary" size="sm" href="#contact" className="mt-2 w-full">
-              Get Free Quote
+              Request a Quote
             </Button>
           </nav>
         )}
