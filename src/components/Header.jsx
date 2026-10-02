@@ -5,19 +5,22 @@ import { BUSINESS } from '../business'
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const menuButtonRef = useRef(null)
+  const isCollectionPage = window.location.pathname.startsWith('/collections/')
+  const homePath = isCollectionPage ? '/' : ''
 
   const navItems = [
-    { label: 'Collections', href: '#collections' },
-    { label: 'Motorization', href: '#motorization' },
-    { label: 'Our Work', href: '#work' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Collections', href: `${homePath}#collections` },
+    { label: 'Motorization', href: `${homePath}#motorization` },
+    { label: 'Our Work', href: `${homePath}#work` },
+    { label: 'About', href: `${homePath}#about` },
+    { label: 'Contact', href: `${homePath}#contact` },
   ]
 
   return (
     <header className="site-header">
       <Container className="site-header__inner">
         <div className="flex items-center justify-between">
-          <a href="#top" className="brand-mark">
+          <a href={isCollectionPage ? '/' : '#top'} className="brand-mark">
             <span className="brand-mark__name">S&amp;P <span>Elegant Blinds</span></span>
             <span className="brand-mark__descriptor">Custom window treatments</span>
           </a>
@@ -38,8 +41,8 @@ const Header = () => {
             <a href={BUSINESS.phoneHref} className="header-phone">
               {BUSINESS.phoneDisplay}
             </a>
-            <Button variant="primary" size="sm" href="#contact">
-              Request a Quote
+            <Button variant="primary" size="sm" href={`${homePath}#contact`}>
+              Request a Consultation
             </Button>
           </div>
 
@@ -81,8 +84,8 @@ const Header = () => {
                 {item.label}
               </a>
             ))}
-            <Button variant="primary" size="sm" href="#contact" className="mt-2 w-full">
-              Request a Quote
+            <Button variant="primary" size="sm" href={`${homePath}#contact`} className="mt-2 w-full">
+              Request a Consultation
             </Button>
           </nav>
         )}

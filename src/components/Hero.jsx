@@ -8,23 +8,22 @@ const Hero = () => {
     <section id="top" className="hero-section">
       <Container className="hero-layout">
         <div className="hero-copy">
-          <p className="eyebrow">Custom window treatments <span>·</span> Serving select ZIP codes in DE, MD &amp; PA</p>
-          <h1 className="hero-title">Beautiful light.<br /><em>Thoughtfully designed.</em></h1>
+          <h1 className="hero-title">Beautiful light, <em>made personal.</em></h1>
           <p className="hero-description">
             Custom blinds and shades for your home, with personal service from selection to installation.
           </p>
           <div className="hero-actions">
-            <Button variant="primary" size="lg" href="#contact">Request a Quote</Button>
+            <Button variant="primary" size="lg" href="#contact">Request a Consultation</Button>
             <a
               className="button button--whatsapp"
               href={getWhatsAppCatalogUrl()}
               target="_blank"
               rel="noopener noreferrer"
             >
-              Get the Catalog on WhatsApp
+              Request the Catalog on WhatsApp
             </a>
           </div>
-          <p className="whatsapp-note">Opens WhatsApp. Send the message and we'll reply with the catalog.</p>
+          <p className="whatsapp-note">Opens WhatsApp. Press Send to request the catalog; we’ll reply with available styles and pricing.</p>
           <p className="hero-location">Based in Middletown, Delaware. See our service ZIP codes below.</p>
         </div>
         <figure className="hero-image-wrap">
@@ -34,12 +33,11 @@ const Hero = () => {
             srcSet={SITE_IMAGES.hero.srcSet}
             sizes={SITE_IMAGES.hero.sizes}
             alt={SITE_IMAGES.hero.alt}
-            width="1024"
-            height="768"
-            fetchPriority="high"
+            width={SITE_IMAGES.hero.width}
+            height={SITE_IMAGES.hero.height}
+            fetchpriority="high"
             loading="eager"
           />
-          <figcaption className="hero-image-caption">A home shaped around its natural light</figcaption>
         </figure>
       </Container>
     </section>

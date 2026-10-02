@@ -1,24 +1,29 @@
 export const BUSINESS = {
   name: 'S&P Elegant Blinds',
+  email: 'info@spelegantblinds.com',
   phoneDisplay: '302-279-6950',
   phoneE164: '+13022796950',
   phoneHref: 'tel:+13022796950',
   whatsappNumber: '13022796950',
+  instagramHref: 'https://www.instagram.com/spelegantblinds/',
   website: 'https://www.spelegantblinds.com/',
   serviceAreas: [
     {
       state: 'Delaware',
       abbreviation: 'DE',
+      towns: ['Middletown', 'Smyrna', 'Townsend'],
       zipCodes: ['19709', '19734', '19977', '19904', '19962', '19720', '19702'],
     },
     {
       state: 'Maryland',
       abbreviation: 'MD',
+      towns: [],
       zipCodes: ['21921', '21901'],
     },
     {
       state: 'Pennsylvania',
       abbreviation: 'PA',
+      towns: ['Exton', 'Chester Springs', 'Downingtown'],
       zipCodes: ['19335', '19341', '19425', '19343', '19380', '19382', '19348', '19363', '19355', '19087', '19320', '19073', '19406', '19301', '19342'],
     },
   ],
@@ -26,32 +31,32 @@ export const BUSINESS = {
     {
       city: 'Exton',
       state: 'PA',
-      description: 'Custom blinds and motorized shades for homes in Exton, with product compatibility confirmed before selection.',
+      services: 'Custom blinds · Motorized shades',
     },
     {
       city: 'Chester Springs',
       state: 'PA',
-      description: 'Explore window treatments and zebra blinds for Chester Springs homes, with options based on each window.',
+      services: 'Window treatments · Zebra blinds',
     },
     {
       city: 'Downingtown',
       state: 'PA',
-      description: 'Ask about custom blinds, motorized shades and blinds installation in Downingtown, with options confirmed for your project.',
+      services: 'Custom blinds · Motorization · Installation',
     },
     {
       city: 'Middletown',
       state: 'DE',
-      description: 'Whole house blinds for Middletown homes can coordinate a consistent style while meeting each room’s light and privacy needs.',
+      services: 'Whole-house blinds',
     },
     {
       city: 'Smyrna',
       state: 'DE',
-      description: 'Compare custom blinds in Smyrna, with fabrics and light control chosen to suit each space.',
+      services: 'Custom blinds',
     },
     {
       city: 'Townsend',
       state: 'DE',
-      description: 'Explore window shades in Townsend based on the privacy and daylight you want in each room.',
+      services: 'Window shades',
     },
   ],
 }

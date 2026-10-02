@@ -92,6 +92,13 @@ const ICONS = {
   solar: <path d="M12 4v2M12 18v2M4 12H2M22 12h-2M6.3 6.3L5 5m13 13-1.3-1.3M17.7 6.3L19 5m-13 13 1.3-1.3M12 8a4 4 0 100 8 4 4 0 000-8z" strokeLinecap="round" strokeLinejoin="round" />,
   quote: <path d="M8 8H5v4h3v5H3v-5a4 4 0 014-4h1v0zm9 0h-3v4h3v5h-5v-5a4 4 0 014-4h1v0z" strokeLinecap="round" strokeLinejoin="round" />,
   spark: <path d="M12 3l2.4 5.1L20 10l-5.6 1.9L12 17l-2.4-5.1L4 10l5.6-1.9L12 3z" strokeLinecap="round" strokeLinejoin="round" />,
+  instagram: (
+    <>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+      <circle cx="12" cy="12" r="3.8" />
+      <circle cx="17.6" cy="6.7" r="0.8" fill="currentColor" stroke="none" />
+    </>
+  ),
 }
 
 export const Icon = ({ name, className = 'h-5 w-5' }) => {

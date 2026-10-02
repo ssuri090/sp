@@ -13,41 +13,41 @@ const WhyChooseUs = () => {
           </div>
           <div className="service-area-copy">
             <p>Based in Middletown, Delaware, we serve the ZIP codes below.</p>
-            <p>If your ZIP code isn't listed, contact us to ask about your location.</p>
+            <p>If your ZIP code isn't listed, call us to ask about your location.</p>
           </div>
           <div className="service-area-groups">
-            {BUSINESS.serviceAreas.map((area) => (
-              <div className="service-area-group" key={area.abbreviation}>
-                <h3>{area.state}</h3>
-                <p>{area.zipCodes.join(', ')}</p>
-              </div>
-            ))}
+            {BUSINESS.serviceAreas.map((area) => {
+              const towns = BUSINESS.localServiceAreas.filter((item) => item.state === area.abbreviation)
+
+              return (
+                <section className="service-area-group" key={area.abbreviation}>
+                  <h3>{area.state}</h3>
+                  {towns.length ? (
+                    <ul>
+                      {towns.map((town) => (
+                        <li key={town.city}><strong>{town.city}</strong><span>{town.services}</span></li>
+                      ))}
+                    </ul>
+                  ) : <p>Selected service ZIP codes</p>}
+                  <details className="service-area-zip-list">
+                    <summary>View {area.zipCodes.length} service ZIP codes</summary>
+                    <p>{area.zipCodes.join(', ')}</p>
+                  </details>
+                </section>
+              )
+            })}
           </div>
         </div>
 
-        <div className="local-services">
-          <div className="local-services__heading">
-            <p className="eyebrow">Local service</p>
-            <h2>Window treatments for your area.</h2>
-          </div>
-          <div className="local-service-grid">
-            {BUSINESS.localServiceAreas.map((area) => (
-              <article className="local-service-item" key={`${area.city}-${area.state}`}>
-                <h3>{area.city}, {area.state}</h3>
-                <p>{area.description}</p>
-              </article>
-            ))}
-          </div>
-          <div className="project-type-grid">
-            <article>
-              <h3>Blinds for new construction homes</h3>
-              <p>Planning a new build? Share the window schedule and room plans so product options can be discussed before final measurements are confirmed.</p>
-            </article>
-            <article>
-              <h3>Whole house window treatments</h3>
-              <p>Coordinate a look throughout the home while choosing light control and privacy to suit each room.</p>
-            </article>
-          </div>
+        <div className="project-type-grid">
+          <article>
+            <h3>Blinds for new construction homes</h3>
+            <p>Planning a new build? Share the window schedule and room plans so product options can be discussed before final measurements are confirmed.</p>
+          </article>
+          <article>
+            <h3>Whole house window treatments</h3>
+            <p>Coordinate a look throughout the home while choosing light control and privacy to suit each room.</p>
+          </article>
         </div>
 
         <div className="faq-layout">

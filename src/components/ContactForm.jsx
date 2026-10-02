@@ -4,14 +4,20 @@ import { BUSINESS, getWhatsAppCatalogUrl } from '../business'
 import { COLLECTIONS } from '../assets/siteImages'
 
 const ContactForm = () => {
-  const formEndpoint = import.meta.env.VITE_CONTACT_FORM_ENDPOINT
+  const formEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formsubmit.co/ajax/info@spelegantblinds.com'
+  const alertEndpoint = import.meta.env.VITE_CONTACT_FORM_ENDPOINT || (import.meta.env.PROD ? '/api/inquiry' : '')
+  const requestedCollection = new URLSearchParams(window.location.search).get('collection')
+  const initialCollection = requestedCollection === 'catalog-request' || requestedCollection === 'picturized-blinds'
+    ? requestedCollection
+    : COLLECTIONS.find((collection) => collection.name === requestedCollection)?.name || 'not-sure'
   const [formStatus, setFormStatus] = useState('idle')
+  const [submitError, setSubmitError] = useState('')
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    if (!formEndpoint) return
 
     setFormStatus('submitting')
+    setSubmitError('')
     const form = event.currentTarget
     const fields = Object.fromEntries(new FormData(form).entries())
 
@@ -22,10 +28,30 @@ const ContactForm = () => {
         body: JSON.stringify(fields),
       })
 
-      if (!response.ok) throw new Error('Inquiry delivery failed')
+      const result = await response.json().catch(() => ({}))
+      if (!response.ok || result.success === false || result.success === 'false') {
+        throw new Error(result.message || result.error || 'The email provider did not accept your inquiry.')
+      }
+
+      let whatsappAlert = 'not_configured'
+      if (alertEndpoint) {
+        try {
+          const alertResponse = await fetch(alertEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(fields),
+          })
+          const alertResult = await alertResponse.json().catch(() => ({}))
+          whatsappAlert = alertResponse.ok ? alertResult.whatsappAlert : 'failed'
+        } catch {
+          whatsappAlert = 'failed'
+        }
+      }
+
       form.reset()
-      setFormStatus('submitted')
-    } catch {
+      setFormStatus(whatsappAlert === 'sent' ? 'submitted' : 'partial')
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'We could not send your inquiry. Please call us instead.')
       setFormStatus('error')
     }
   }
@@ -52,8 +78,12 @@ const ContactForm = () => {
         </div>
         <p className="contact-footnote">WhatsApp opens a prepared message. Press Send to start the conversation; a click alone does not send a request.</p>
         <form className="inquiry-form" onSubmit={handleSubmit}>
-          <fieldset disabled={!formEndpoint || formStatus === 'submitting'}>
+          <fieldset disabled={formStatus === 'submitting'}>
             <legend>Prefer to send a project inquiry?</legend>
+            <label className="inquiry-honeypot" aria-hidden="true">
+              Leave this field blank
+              <input autoComplete="off" name="companyWebsite" tabIndex={-1} />
+            </label>
             <div className="inquiry-fields">
               <label>
                 Name
@@ -76,8 +106,10 @@ const ContactForm = () => {
               </label>
               <label>
                 Collection
-                <select name="collection" defaultValue="not-sure">
+                <select name="collection" defaultValue={initialCollection}>
                   <option value="not-sure">Not sure yet</option>
+                  <option value="catalog-request">Catalog request</option>
+                  <option value="picturized-blinds">Picturized blinds</option>
                   {COLLECTIONS.map((collection) => <option key={collection.id} value={collection.name}>{collection.name}</option>)}
                 </select>
               </label>
@@ -94,9 +126,9 @@ const ContactForm = () => {
               {formStatus === 'submitting' ? 'Sending…' : 'Send inquiry'}
             </button>
           </fieldset>
-          {!formEndpoint && <p className="form-notice">Online inquiries are not connected yet. Please call or start a WhatsApp conversation above.</p>}
-          {formStatus === 'submitted' && <p className="form-status" role="status">Your inquiry was accepted. The team can follow up using the contact details you provided.</p>}
-          {formStatus === 'error' && <p className="form-error" role="alert">We could not send that inquiry. Please call or message us using the contact links above.</p>}
+          {formStatus === 'submitted' && <p className="form-status" role="status">Your inquiry was emailed to {BUSINESS.email}. A WhatsApp alert was also sent to the business.</p>}
+          {formStatus === 'partial' && <p className="form-status" role="status">Your inquiry was emailed to {BUSINESS.email}. The WhatsApp alert is not configured or could not be sent; you do not need to submit again.</p>}
+          {formStatus === 'error' && <p className="form-error" role="alert">{submitError} Call {BUSINESS.phoneDisplay} if you need to contact us now.</p>}
         </form>
       </Container>
     </section>
