@@ -125,6 +125,7 @@ export default async function handler(req, res) {
   }
 
   const name = cleanText(body.name, 100)
+  const email = cleanText(body.email, 254)
   const phone = cleanText(body.phone, 30)
   const phoneDigits = phone.replace(/\D/g, '')
   const zipCode = cleanText(body.zipCode, 5)
@@ -139,8 +140,8 @@ export default async function handler(req, res) {
   const allowedCollections = new Set(['not-sure', 'Not sure yet', 'catalog-request', 'Catalog request', 'picturized-blinds', 'Picturized blinds', ...COLLECTIONS.map((item) => item.name)])
   const consentGiven = body.contactConsent === true || body.contactConsent === 'on'
 
-  if (!name || name.length < 2 || !/^[+\d().\s-]{7,30}$/.test(phone) || phoneDigits.length < 7 || phoneDigits.length > 15 || !/^\d{5}$/.test(zipCode) || !['phone', 'whatsapp'].includes(preferredContact) || !allowedCollections.has(collectionValue) || message.length > 2000 || !consentGiven) {
-    return reply(res, 400, { error: 'Please check your name, phone, ZIP code, collection and contact consent.' })
+  if (!name || name.length < 2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !/^[+\d().\s-]{7,30}$/.test(phone) || phoneDigits.length < 7 || phoneDigits.length > 15 || !/^\d{5}$/.test(zipCode) || !['phone', 'whatsapp'].includes(preferredContact) || !allowedCollections.has(collectionValue) || message.length > 2000 || !consentGiven) {
+    return reply(res, 400, { error: 'Please check your name, email, phone, ZIP code, collection and contact consent.' })
   }
 
 
